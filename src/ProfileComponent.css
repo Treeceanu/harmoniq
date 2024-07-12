@@ -1,0 +1,31 @@
+/* src/ProfileComponent.css */
+.profile-overlay {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Keep this to make the overlay slide from the left */
+    width: 25%;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    transition: left 0.5s ease-in-out; /* Keep this to make the overlay slide from the left */
+    z-index: 1000;
+}
+
+.profile-visible {
+    left: 0; /* Keep this to make the overlay slide from the left */
+}
+
+.profile-content {
+    padding: 1px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px; /* Align to the right */
+
+}
+
+h1 {
+    text-align: center;
+}
