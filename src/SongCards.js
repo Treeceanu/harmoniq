@@ -2,23 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./SongCards.css";
 import TinderCard from "react-tinder-card";
 import axios from "./axios";
+import SwipeButtons from "./SwipeButtons";
 
-function SongCards() {
+function SongCards({swiped}) {
   const [songs, setSongs] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const req = await axios.get("/harmoniq/cards");
+  const [displayedSong, setDisplayedSong] = useState({});
 
-      setSongs(req.data);
-    }
-    fetchData();
-  }, []);
   console.log(songs);
+  console.log("sdfghjmk,",displayedSong);
 
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing:" + nameToDelete);
-    //setLastDirection(direction);
-  };
+  
   const outOfFrame = (name) => {
     console.log(name + "left the scene!");
   };
@@ -43,7 +36,9 @@ function SongCards() {
             </div>
           </TinderCard>
         ))}
+        
       </div>
+      <SwipeButtons swiped={swiped} displayedSong={displayedSong? displayedSong : null}/>
     </div>
   );
 }

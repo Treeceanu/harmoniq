@@ -7,7 +7,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FlashOnIcon from '@mui/icons-material/FlashOn';
 import { IconButton } from '@mui/material';
 
-function SwipeButtons() {
+function SwipeButtons(props) {
+    console.log("sdasfa",props)
+    let displayedSong = props.displayedSong;
   return (
     <div className='swipeButtons'>
         <IconButton className='swipeButtons__repeat'>
@@ -19,7 +21,7 @@ function SwipeButtons() {
         <IconButton className='swipeButtons__star'>
             <StarRateIcon fontSize='large'/>
         </IconButton>
-        <IconButton className='swipeButtons__right'>
+        <IconButton className='swipeButtons__right' onClick={console.log("dasdasdas",displayedSong)}>
             <FavoriteIcon fontSize='large'/>
         </IconButton>
         <IconButton className='swipeButtons__lightning'>

@@ -1,31 +1,86 @@
 /* src/ProfileComponent.css */
 .profile-overlay {
-    position: fixed;
-    top: 0;
-    left: -100%; /* Keep this to make the overlay slide from the left */
-    width: 25%;
-    height: 100%;
-    background-color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    transition: left 0.5s ease-in-out; /* Keep this to make the overlay slide from the left */
-    z-index: 1000;
+  position: absolute;
+  top: 0;
+  left: -100%; /* Keep this to make the overlay slide from the left */
+  width: 25%;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transition: left 0.5s ease-in-out; /* Keep this to make the overlay slide from the left */
+  z-index: 1000;
 }
 
 .profile-visible {
-    left: 0; /* Keep this to make the overlay slide from the left */
+  left: 0; /* Keep this to make the overlay slide from the left */
 }
 
 .profile-content {
-    padding: 1px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 20px;
 }
 
 .close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px; /* Align to the right */
-
+  position: absolute;
+  top: 10px;
+  left: 35%;
 }
 
 h1 {
-    text-align: center;
+  position: absolute;
+  text-align: center;
+
+  padding-bottom: 35px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.login-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 200px;
+}
+
+.login-button:hover {
+  background-color: black;
+}
+
+.modal-content {
+  position: relative;
+  background: white;
+  padding: 40px;
+  border-radius: 8px;
+  width: 400px;
+  margin: auto;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: -30px;
+  left: 400px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
 }
