@@ -1,39 +1,85 @@
 /* src/TabComponent.css */
 .tab-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 25%;
-    height: 100%;
-    background-color: white;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    transition: transform 0.5s ease-in-out ;
-    transform: translateX(100%);
-  }
-  
-  .tab-visible {
-    transform: translateX(0);
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: #f00;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 5px;
-  }
-  h1{
-    text-align: center;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #f9f9f9;
-    
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 25%;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: transform 0.5s ease-in-out;
+  transform: translateX(100%);
+}
 
-  }
+.tab-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  padding: 20px;
+}
 
-  
+.tab-visible {
+  transform: translateX(0);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Adjusted to align with the right edge */
+  background-color: #f00;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+h1 {
+  position: absolute;
+  text-align: center;
+  margin-top: 50px;
+  width: 100%;
+  padding-bottom: 35px;
+  border-bottom: 1px solid #f9f9f9;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+li {
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+img {
+  margin-top: 50px;
+  width: 40px; /* Make the image smaller */
+  height: 40px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+h4 {
+  padding-top: 50px;
+  margin: 0;
+  font-size: 14px; /* Smaller font size */
+  font-weight: 500;
+}
+
+p {
+  margin-top: 50px;
+  margin: 0;
+  font-size: 12px; /* Smaller font size */
+  color: #666;
+}

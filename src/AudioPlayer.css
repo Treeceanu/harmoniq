@@ -1,0 +1,50 @@
+/* Styles for the audio player container */
+.audioPlayerContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #282828;
+    color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+   
+  }
+  
+  /* Styling for controls section */
+  .controlsContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+  
+  /* Progress bar container */
+  .progressBarContainer {
+    width: 100%;
+    margin-top: 8px;
+  }
+  
+  /* Time display alignment */
+  .timeDisplay {
+    display: flex;
+    justify-content: space-between;
+    color: #b3b3b3;
+  }
+  
+  /* Modal styles to ensure consistency */
+  .Modal {
+    background-color: #282828;
+    color: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    width: 90%;
+    max-width: 800px;
+    margin: auto;
+    outline: none;
+  }
+  
+  .Overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  

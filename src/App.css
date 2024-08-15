@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.no-scroll {
+  overflow: hidden !important; /* Ensure it applies */
+  height: 100% !important; /* Ensure the body takes full height */
+}

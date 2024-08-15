@@ -1,46 +1,99 @@
-import React, { useEffect, useState } from "react";
-import "./SongCards.css";
-import TinderCard from "react-tinder-card";
-import axios from "./axios";
-import SwipeButtons from "./SwipeButtons";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import Modal from 'react-modal';
+import './SongCards.css';
+import TinderCard from 'react-tinder-card';
+import AudioPlayer from './AudioPlayer';
+import { IconButton } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import CloseIcon from '@mui/icons-material/Close';
 
-function SongCards({swiped}) {
-  const [songs, setSongs] = useState([]);
-  const [displayedSong, setDisplayedSong] = useState({});
+Modal.setAppElement('#root');
 
-  console.log(songs);
-  console.log("sdfghjmk,",displayedSong);
+function SongCards({ songs = [], swiped, outOfFrame }) {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [currentSong, setCurrentSong] = useState(null);
 
-  
-  const outOfFrame = (name) => {
-    console.log(name + "left the scene!");
+  const openModal = (song) => {
+    setCurrentSong(song);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setCurrentSong(null);
   };
 
   return (
-    <div className="SongCards">
-      <div className="SongCards__cardContainer" style={{ overflow: "hidden" }}>
-        {songs.map((song, index) => (
+    <div className="songCards">
+      {songs.length === 0 ? (
+        <div className="loadingContainer">
+          <CircularProgress />
+          <p>Loading songs...</p>
+        </div>
+      ) : (
+        songs.map((song) => (
           <TinderCard
             className="swipe"
             key={song.name}
-            preventSwipe={["up", "down"]}
             onSwipe={(dir) => swiped(dir, song.name)}
             onCardLeftScreen={() => outOfFrame(song.name)}
+            preventSwipe={['up', 'down']}
           >
             <div
-              key={index}
               style={{ backgroundImage: `url(${song.imgUrl})` }}
               className="card"
             >
-              <h3>{song.name}</h3>
+              <div className="cardContent">
+                <h3>{song.name}</h3>
+              </div>
+              <IconButton
+                className="playButton"
+                onClick={() => openModal(song)}
+                color="primary"
+              >
+                <PlayArrowIcon className='playArrowIcon'  />
+              </IconButton>
             </div>
           </TinderCard>
-        ))}
-        
-      </div>
-      <SwipeButtons swiped={swiped} displayedSong={displayedSong? displayedSong : null}/>
+        ))
+      )}
+
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Song Modal"
+        className="Modal"
+        overlayClassName="Overlay"
+      >
+        {currentSong ? (
+          <div className="modalContent">
+            <h2>{currentSong.name}</h2>
+            <AudioPlayer src={currentSong.previewUrl} title={currentSong.name} artist={currentSong.artist} />
+            <IconButton className="closeButton" onClick={closeModal} color="secondary">
+              <CloseIcon />
+            </IconButton>
+          </div>
+        ) : (
+          <p>No song selected</p>
+        )}
+      </Modal>
     </div>
   );
 }
+
+SongCards.propTypes = {
+  songs: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      imgUrl: PropTypes.string.isRequired,
+      previewUrl: PropTypes.string,
+      artist: PropTypes.string,
+    })
+  ).isRequired,
+  swiped: PropTypes.func.isRequired,
+  outOfFrame: PropTypes.func.isRequired,
+};
 
 export default SongCards;

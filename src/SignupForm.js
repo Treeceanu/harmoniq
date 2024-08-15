@@ -1,17 +1,19 @@
 import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 import './SignupForm.css';
-import instance from "./axios";
+import axios from "axios";
 
 const SignupForm = ({ onClose }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => { 
+    e.preventDefault();
     try {
+      
       console.log("before response");
-      const response = await instance.get('http://localhost:8001/signup', {
+      const response = await axios.post('http://localhost:8001/signup', {
         username,
         email,
         password,
@@ -21,10 +23,10 @@ const SignupForm = ({ onClose }) => {
       // onClose();
       alert(response.data);
     } catch (error) {
-      alert(`Error: ${error.response ? error.response.data : 'Server error'}`);
+       console.log(`Error: ${error.response ? error.response.data : 'Server error'}`);
     }
     
-    e.preventDefault();
+   
     console.log("Username:", username, "Email:", email, "Password:", password);
     
   };
