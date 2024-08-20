@@ -23,12 +23,13 @@ const userSlice = createSlice({
 
 export const { loginSuccess, logout } = userSlice.actions;
 
+
 // Songs slice
 const songsSlice = createSlice({
   name: 'songs',
   initialState: {
     songs: [],
-    likedSongs: [],  // Added to store liked songs
+    likedSongs: [],
     status: 'idle',
   },
   reducers: {
@@ -37,9 +38,11 @@ const songsSlice = createSlice({
       state.status = 'succeeded';
     },
     likeSong(state, action) {
-      // Add liked song to likedSongs array and remove it from the songs array
-      state.likedSongs.push(action.payload);
-      state.songs = state.songs.filter(song => song.name !== action.payload.name);
+      const newLikedSong = action.payload;
+      if (!state.likedSongs.some(song => song.name === newLikedSong.name)) {
+        state.likedSongs.push(newLikedSong); // Use push to add at the end
+      }
+      state.songs = state.songs.filter(song => song.name !== newLikedSong.name);
     },
     setSongsStatus(state, action) {
       state.status = action.payload;
@@ -59,7 +62,6 @@ export const fetchSongs = () => async (dispatch) => {
     dispatch(setSongsStatus('failed'));
   }
 };
-
 // Configure the store
 const store = configureStore({
   reducer: {

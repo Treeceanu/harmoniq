@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import './SongCards.css';
@@ -11,9 +11,22 @@ import CloseIcon from '@mui/icons-material/Close';
 
 Modal.setAppElement('#root');
 
-function SongCards({ songs = [], swiped, outOfFrame }) {
+const SongCards = forwardRef(({ songs, swiped, outOfFrame }, ref) => {
+  const cardRefs = useRef({});
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [currentSong, setCurrentSong] = useState(null);
+
+  useImperativeHandle(ref, () => ({
+    swipe: (dir) => {
+      const currentCard = cardRefs.current[songs[0]?.name];
+      if (currentCard && currentCard.swipe) {
+        currentCard.swipe(dir);
+      } else {
+        console.error('Swipe method not available on currentCard');
+      }
+    }
+  }));
 
   const openModal = (song) => {
     setCurrentSong(song);
@@ -25,6 +38,8 @@ function SongCards({ songs = [], swiped, outOfFrame }) {
     setCurrentSong(null);
   };
 
+  const sortedSongs = [...songs].sort((a, b) => a.name.localeCompare(b.name));
+
   return (
     <div className="songCards">
       {songs.length === 0 ? (
@@ -33,13 +48,14 @@ function SongCards({ songs = [], swiped, outOfFrame }) {
           <p>Loading songs...</p>
         </div>
       ) : (
-        songs.map((song) => (
+        sortedSongs.map((song) => (
           <TinderCard
+            ref={(el) => (cardRefs.current[song.name] = el)}
             className="swipe"
             key={song.name}
+            preventSwipe={['up', 'down']}
             onSwipe={(dir) => swiped(dir, song.name)}
             onCardLeftScreen={() => outOfFrame(song.name)}
-            preventSwipe={['up', 'down']}
           >
             <div
               style={{ backgroundImage: `url(${song.imgUrl})` }}
@@ -53,7 +69,7 @@ function SongCards({ songs = [], swiped, outOfFrame }) {
                 onClick={() => openModal(song)}
                 color="primary"
               >
-                <PlayArrowIcon className='playArrowIcon'  />
+                <PlayArrowIcon className='playArrowIcon' />
               </IconButton>
             </div>
           </TinderCard>
@@ -81,7 +97,7 @@ function SongCards({ songs = [], swiped, outOfFrame }) {
       </Modal>
     </div>
   );
-}
+});
 
 SongCards.propTypes = {
   songs: PropTypes.arrayOf(

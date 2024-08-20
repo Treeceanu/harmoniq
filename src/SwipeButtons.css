@@ -1,6 +1,7 @@
+
 .swipeButtons {
     position: relative;
-    bottom: 22vh; /* Adjust to create enough space above the cards */
+    bottom: 25vh; /* Adjust to create enough space above the cards */
     display: flex;
     width: 100%;
     justify-content: space-evenly;
@@ -12,13 +13,14 @@
     box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Adjust icon sizes and button padding */
+
 .swipeButtons__repeat,
 .swipeButtons__left,
 .swipeButtons__star,
-.swipeButtons__right,
+.swipeButtons__favorite,
 .swipeButtons__lightning {
-    padding: 1.5vw !important; /* Adjust padding if needed */
+    padding: 1.5vw !important; 
+   
 }
 
 /* Example button colors */
@@ -34,7 +36,7 @@
     color: #00c3ff !important;
 }
 
-.swipeButtons__right {
+.swipeButtons__favorite {
     color: #00c54c !important;
 }
 

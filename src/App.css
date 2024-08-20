@@ -43,7 +43,16 @@ html, body {
   width: 100%;
 }
 
-.no-scroll {
-  overflow: hidden !important; /* Ensure it applies */
-  height: 100% !important; /* Ensure the body takes full height */
+.main-content {
+  position: relative;
 }
+
+.main-content-overlay {
+  pointer-events: none; /* Ensure this doesn't block button interactions */
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+/* Additional CSS */

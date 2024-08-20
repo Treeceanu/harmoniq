@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import "./ProfileComponent.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Icon, IconButton } from "@mui/material";
+import {  IconButton } from "@mui/material";
 import Modal from "react-modal";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
