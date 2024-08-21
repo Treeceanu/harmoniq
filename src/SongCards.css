@@ -78,4 +78,24 @@
   .playArrowIcon{
     color: black;
   }
+  body.dark-mode .songCards {
+    background-color: #222;
+    box-shadow: 0 2px 4px rgb(255, 255, 255);
+  }
+  
+  body.dark-mode .close-button {
+    background-color: #444;
+  }
+  
+  body.dark-mode h1 {
+    border-bottom: 1px solid #444;
+  }
+  body.dark-mode h3 {
+    color: white;
+    border-bottom: 1px solid #444;
+  }
+  
+  body.dark-mode p {
+    color: #ccc;
+  }
   

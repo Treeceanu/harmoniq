@@ -52,10 +52,12 @@ const songsSlice = createSlice({
 
 export const { setSongs, likeSong, setSongsStatus } = songsSlice.actions;
 
-export const fetchSongs = () => async (dispatch) => {
+export const fetchSongs = (genre) => async (dispatch) => {
   dispatch(setSongsStatus('loading'));
   try {
-    const response = await axios.get('http://localhost:8001/harmoniq/cards', { withCredentials: true });
+    // Send genre as a query parameter to the backend
+    
+    const response = await axios.get(`http://localhost:8001/harmoniq/cards?genre=${genre}`, { withCredentials: true });
     dispatch(setSongs(response.data));
   } catch (error) {
     console.error('Failed to fetch songs:', error.response ? error.response.data : error.message);

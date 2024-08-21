@@ -1,9 +1,10 @@
-/* src/LoginForm.css */
 .login-form {
     display: flex;
     flex-direction: column;
+    align-items: center;  /* Center the form content */
     width: 100%;
     max-width: 400px;
+    margin: 0 auto;  /* Center the form on the page */
 }
 
 .login-form h2 {
@@ -12,15 +13,13 @@
 }
 
 .login-form label {
-    left: 100px;
     margin: 10px 0 5px;
-    text-align: center;
-    display: flex;
-    position: relative;
+    text-align: left;  /* Align text to the left */
+    width: 100%;  /* Make label take full width */
 }
 
 .login-form input {
-    margin-left: 100px;
+    width: 100%;  /* Make input take full width */
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -28,15 +27,24 @@
 }
 
 .submit-button {
-    position: absolute;
-    left: 166px;
+    width: 30%;
+   
     color: white;
-    border: 10px;
-    padding: 55px 20px;
-    border-radius: 5px;
+    background-color: #007bff;  /* Add background color */
+    padding: 0px;
+    border: none;
+    border-radius: 0px;
     cursor: pointer;
+    text-align: center;  /* Center text inside the button */
+    margin-top: 20px;  /* Add some space from input fields */
 }
 
 .submit-button:hover {
-    background-color: #0056b3;
+    background-color: #000000;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
 }

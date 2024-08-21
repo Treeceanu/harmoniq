@@ -3,12 +3,32 @@
     align-items: center;
     justify-content: space-between;
     z-index: 100%;
+
     border-bottom: 1px solid #f9f9f9;
+    padding: 0 20px;
 
 }
 
 
 .header_logo{
     object-fit: contain;
-    height: 90px;
+    margin-top: 0px;
+    height: 100px;
+    width: 100px;
 }
+body.dark-mode .header {
+    background-color: #222;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
+  }
+  
+  body.dark-mode .header_logo {
+    background-color: #222;
+  }
+  
+  body.dark-mode h1 {
+    border-bottom: 1px solid #444;
+  }
+  
+  body.dark-mode p {
+    color: #ccc;
+  }

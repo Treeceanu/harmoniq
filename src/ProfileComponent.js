@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import { Avatar } from '@mui/material';
 import { useDispatch } from "react-redux";
 import { logout } from "./store";
+import { useTheme } from "./ThemeContext";
+import ThemeToggleButton from './ThemeToggleButton';
 
 
 
@@ -18,7 +20,8 @@ Modal.setAppElement("#root"); // For accessibility, set the root element
 function ProfileComponent({ isVisible, onClose, user }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const {toggleTheme} = useTheme();
 
   const openModal = (isLoginForm) => {
     setIsLogin(isLoginForm);
@@ -45,7 +48,8 @@ function ProfileComponent({ isVisible, onClose, user }) {
                 <strong>Email:</strong> {user.email}
               </p>
             </Box>
-            <IconButton onClick={() => dispatch(logout())}>Logout</IconButton>
+            <IconButton className="logout-button" onClick={() => dispatch(logout())}>Logout</IconButton>
+            <ThemeToggleButton />
           </div>
         ) : (
           <div className="buttons-container">

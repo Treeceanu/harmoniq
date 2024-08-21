@@ -10,41 +10,56 @@
 
 .swipeButtons .MuiIconButton-root {
     background-color: white;
+    border-radius: 50%;
+    width: 75px;   /* Example width, adjust as needed */
+    height: 75px;  /* Example height, adjust as needed */
+    display: flex; /* Ensure proper centering */
+    align-items: center;
+    justify-content: center;
     box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important;
 }
+body.dark-mode .swipeButtons .MuiIconButton-root{ 
+    background-color: #222;
+    box-shadow: 0px 5px 33px 0px rgba(255, 255, 255, 0.212) !important;
+}
 
 
-.swipeButtons__repeat,
-.swipeButtons__left,
-.swipeButtons__star,
-.swipeButtons__favorite,
-.swipeButtons__lightning {
-    padding: 1.5vw !important; 
+.swipeButtons__repeat{
+    color: wheat !important;
+    
+}
+.swipeButtons__left{
+    color: red !important;
+    
+}
+.swipeButtons__star{
+    color: turquoise !important;
    
 }
-
-/* Example button colors */
-.swipeButtons__repeat {
-    color: #f5b748 !important;
+.swipeButtons__favorite{
+    color:#00c54c !important;
+   
 }
-
-.swipeButtons__left {
-    color: #cc0000 !important;
-}
-
-.swipeButtons__star {
-    color: #00c3ff !important;
-}
-
-.swipeButtons__favorite {
-    color: #00c54c !important;
-}
-
-.swipeButtons__lightning {
-    color: #5c0040 !important;
+.swipeButtons__lightning{
+    color: purple !important;
+    
 }
 
 /* Ensure the card has space at the bottom */
 .card {
     margin-bottom: 20vh; /* Adjust margin to ensure no overlap */
 }
+
+
+  .swipeButtons__dropdown {
+    position: absolute;
+    top: 60px;  /* Adjust based on your layout */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;  /* Ensure it appears above other elements */
+  }
+  

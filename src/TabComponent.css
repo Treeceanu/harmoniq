@@ -6,11 +6,12 @@
   width: 25%;
   height: 100%;
   background-color: white;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.5);
   z-index: 100;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out, background-color 0.3s, box-shadow 0.3s;
   transform: translateX(100%);
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .tab-content {
@@ -29,7 +30,7 @@
 .close-button {
   position: absolute;
   top: 10px;
-  right: 10px; /* Adjusted to align with the right edge */
+  right: 10px;
   background-color: #f00;
   color: #fff;
   border: none;
@@ -64,7 +65,7 @@ li {
 
 img {
   margin-top: 50px;
-  width: 40px; /* Make the image smaller */
+  width: 40px;
   height: 40px;
   object-fit: cover;
   border-radius: 5px;
@@ -74,13 +75,31 @@ img {
 h4 {
   padding-top: 50px;
   margin: 0;
-  font-size: 14px; /* Smaller font size */
+  font-size: 14px;
   font-weight: 500;
 }
 
 p {
   margin-top: 50px;
   margin: 0;
-  font-size: 12px; /* Smaller font size */
+  font-size: 12px;
   color: #666;
+}
+
+
+body.dark-mode .tab-overlay {
+  background-color: #222;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .close-button {
+  background-color: #444;
+}
+
+body.dark-mode h1 {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-mode p {
+  color: #ccc;
 }

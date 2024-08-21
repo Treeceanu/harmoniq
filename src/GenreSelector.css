@@ -1,0 +1,45 @@
+/* Default Styles */
+.dropdown-menu {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    overflow-y: scroll;
+    
+    background-color: #fff; /* Light mode background */
+    color: #000; /* Light mode text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light mode shadow */
+    border: 1px solid #ccc; /* Light mode border */
+  }
+  
+  .dropdown-button {
+    outline: auto;
+    outline-color: black;
+    accent-color: red;
+    color: black;
+    background-color: #f0f0f0; /* Light mode background */
+    border: 1px solid #ccc; /* Light mode border */
+  }
+  
+  /* Dark Mode Styles */
+  body.dark-mode .dropdown-menu {
+    background-color: #222 !important; /* Dark mode background for the larger box */
+    color: #fff !important; /* Dark mode text color */
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2) !important; /* Dark mode shadow */
+    border: 1px solid #444 !important; /* Dark mode border */
+  }
+  
+  body.dark-mode .genre-selector-container .MuiButton-root {
+    background-color: #444 !important; /* Dark mode background */
+    color: #fff; /* Dark mode text color */
+    border: 1px solid #666 !important; /* Dark mode border */
+  }
+  
+  body.dark-mode .genre-selector-container .MuiButton-root:hover {
+    background-color: #555 !important; /* Hover effect in dark mode */
+    color: #fff !important;
+  }
+  
+  body.dark-mode .MuiTouchRipple-root {
+    background-color: rgba(255, 255, 255, 0.3) !important; /* Optional ripple effect adjustment for dark mode */
+  }
+  

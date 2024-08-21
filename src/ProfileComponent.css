@@ -5,7 +5,7 @@
   width: 25%;
   height: 100%;
   background-color: white;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 0 10px rgba(0, 0, 0, 0.5);
   transition: left 0.5s ease-in-out; /* Keep this to make the overlay slide from the left */
   z-index: 100;
 }
@@ -32,8 +32,8 @@
 h1 {
   position: absolute;
   text-align: center;
-
-
+  margin-top: 50px;
+  width: 100%;
   padding-bottom: 35px;
   border-bottom: 1px solid #f9f9f9;
   
@@ -44,9 +44,20 @@ h1 {
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 0px;
   cursor: pointer;
   margin-top: 200px;
+}
+.logout-button{
+  top: 100px;
+  color: white;
+  border: none;
+  width: auto;
+  padding: 10px 20px;
+  border-radius: 0px;
+  cursor: pointer;
+  margin-top: 200px;
+
 }
 
 .login-button:hover {
@@ -78,8 +89,10 @@ h1 {
 
 .modal-close-button {
   position: absolute;
-  top: -30px;
-  left: 400px;
+  top: -25px;
+  left: 300px;
+  width: 10%;
+  height: 10%;
   background: none;
   border: none;
   font-size: 20px;
@@ -91,10 +104,31 @@ h1 {
   flex-direction: column;
 }
 .profile-details{
-  padding-top: 50px;
+  padding-top: 100px;
   display: flex;
   flex-direction: column;
   font-family:Arial, Helvetica, sans-serif;
   font-size: large;
+}
+/* src/ProfileComponent.css */
+.theme-toggle-button {
+  top: 120px;
+  margin-top: 20px;
+}
+body.dark-mode .profile-overlay {
+  background-color: #222;
+  box-shadow: 0 2px 4px rgb(255, 255, 255);
+}
+
+body.dark-mode .close-button {
+  background-color: #444;
+}
+
+body.dark-mode h1 {
+  border-bottom: 1px solid #444;
+}
+
+body.dark-mode p {
+  color: #ccc;
 }
 

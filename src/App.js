@@ -6,13 +6,14 @@ import SongCards from "./SongCards";
 import SwipeButtons from "./SwipeButtons";
 import TabComponent from "./TabComponent";
 import ProfileComponent from "./ProfileComponent";
+import GenreSelector from "./GenreSelector";
 import { useSelector, useDispatch } from "react-redux";
 import { loginSuccess, fetchSongs, likeSong } from "./store";
-
 
 function App() {
   const [showTab, setShowTab] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState("");
   const cardRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -20,13 +21,14 @@ function App() {
   const songs = useSelector((state) => state.songs.songs);
   const likedSongs = useSelector((state) => state.songs.likedSongs);
   const songStatus = useSelector((state) => state.songs.status);
+  
 
   useEffect(() => {
     if (songStatus === "idle") {
       console.log("Dispatching fetchSongs...");
-      dispatch(fetchSongs());
+      dispatch(fetchSongs(selectedGenre));
     }
-  }, [songStatus, dispatch]);
+  }, [songStatus, dispatch, selectedGenre]);
 
   useEffect(() => {
     if (showTab || showProfile) {
@@ -36,16 +38,42 @@ function App() {
     }
     return () => document.body.classList.remove("no-scroll");
   }, [showTab, showProfile]);
-  
+
   const handleLike = () => {
     const songToLike = songs[0]; // Get the first song in the list
     if (songToLike) {
       dispatch(likeSong(songToLike));
       if (cardRef.current && cardRef.current.swipe) {
-        cardRef.current.swipe('right');
+        cardRef.current.swipe("right");
       } else {
-        console.error('Swipe method not available on cardRef');
+        console.error("Swipe method not available on cardRef");
       }
+    }
+  };
+  
+  const handleDislike = (songId) => {
+    const isAuthenticated = !!user;
+    if (!isAuthenticated) {
+      alert("Please login to dislike a song.");
+      return;
+    }
+
+    try {
+      // Dislike the song
+      axios.post(
+        "http://localhost:8001/disliked-songs",
+        { songId },
+        { withCredentials: true }
+      );
+
+      // Swipe the card left
+      if (cardRef.current && cardRef.current.swipe) {
+        cardRef.current.swipe("left");
+      } else {
+        console.error("Swipe method not available on cardRef");
+      }
+    } catch (error) {
+      console.error("Error disliking song:", error);
     }
   };
 
@@ -73,8 +101,8 @@ function App() {
 
   const swiped = (direction, nameToDelete) => {
     console.log("removing:" + nameToDelete);
-    if (direction === 'right') {
-      const likedSong = songs.find(song => song.name === nameToDelete);
+    if (direction === "right") {
+      const likedSong = songs.find((song) => song.name === nameToDelete);
       if (likedSong) {
         dispatch(likeSong(likedSong));
       }
@@ -101,6 +129,24 @@ function App() {
       console.error("Login failed:", error);
     }
   };
+  const handleGenreSelect = (genre) => {
+    setSelectedGenre(genre);
+    console.log("Selected genre:", genre);
+  };
+
+  // Example genres; replace with actual genres if available
+  const genres = [
+    "Pop",
+    "Rock",
+    "Jazz",
+    "Hip-Hop",
+    "Classical",
+    "Metal",
+    "Drum and Bass",
+    "Dubstep",
+    "Techno",
+    "Hardstyle",
+  ];
 
   return (
     <div className="app">
@@ -115,9 +161,26 @@ function App() {
         onClose={closeProfile}
         user={user}
       />
-      <div className={`main-content ${showTab || showProfile ? "main-content-overlay" : ""}`}>
-        <SongCards ref={cardRef} songs={songs} swiped={swiped} outOfFrame={outOfFrame} />
-        <SwipeButtons displayedSong={songs[0]} onLike={handleLike} onSwipe={handleSwipe} />
+      <div
+        className={`main-content ${
+          showTab || showProfile ? "main-content-overlay" : ""
+        }`}
+      >
+        <SongCards
+          ref={cardRef}
+          songs={songs}
+          swiped={swiped}
+          outOfFrame={outOfFrame}
+        />
+        <SwipeButtons
+          displayedSong={songs[0]}
+          onLike={handleLike}
+          onSwipe={handleSwipe}
+          onDislike={handleDislike}
+        />
+        <div className="genre-selector-container">
+          <GenreSelector genres={genres} onSelectGenre={handleGenreSelect} />
+        </div>
       </div>
     </div>
   );
