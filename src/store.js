@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { fetchLikedSongs, addLikedSong, removeLikedSong } from './songService';
-import 'dotenv/config';
+
 import { thunk } from 'redux-thunk';
 import axios from 'axios';
 
