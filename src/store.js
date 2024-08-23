@@ -1,4 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
+import { fetchLikedSongs, addLikedSong, removeLikedSong } from './songService';
+import 'dotenv/config';
 import { thunk } from 'redux-thunk';
 import axios from 'axios';
 
@@ -22,6 +24,9 @@ const userSlice = createSlice({
 });
 
 export const { loginSuccess, logout } = userSlice.actions;
+export const ADD_LIKED_SONG = 'ADD_LIKED_SONG';
+export const REMOVE_LIKED_SONG = 'REMOVE_LIKED_SONG';
+export const  SET_LIKED_SONGS = 'SET_LIKED_SONGS';
 
 
 // Songs slice
@@ -47,17 +52,24 @@ const songsSlice = createSlice({
     setSongsStatus(state, action) {
       state.status = action.payload;
     },
+    setLikedSongs(state, action) {
+      state.likedSongs = action.payload;
+    },
+    clearLikedSongs(state) {
+      state.likedSongs = [];
+    },
   },
 });
 
-export const { setSongs, likeSong, setSongsStatus } = songsSlice.actions;
+export const { setSongs, likeSong, setSongsStatus,  clearLikedSongs } = songsSlice.actions;
+
 
 export const fetchSongs = (genre) => async (dispatch) => {
   dispatch(setSongsStatus('loading'));
   try {
-    // Send genre as a query parameter to the backend
     
-    const response = await axios.get(`http://localhost:8001/harmoniq/cards?genre=${genre}`, { withCredentials: true });
+    
+    const response = await axios.get(`${process.env.REACT_APP_BACKEND}/harmoniq/cards?genre=${genre}`, { withCredentials: true });
     dispatch(setSongs(response.data));
   } catch (error) {
     console.error('Failed to fetch songs:', error.response ? error.response.data : error.message);
@@ -72,5 +84,29 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
 });
+export const setLikedSongs = (songs) => ({
+  type: SET_LIKED_SONGS,
+  payload: songs,
+});
+
+export const addLikedSongAction = (song) => async (dispatch, getState) => {
+  const { userId } = getState().user; // Assume userId is in the state
+  try {
+    await addLikedSong(userId, song);
+    dispatch({ type: ADD_LIKED_SONG, payload: song });
+  } catch (error) {
+    console.error('Error adding song', error);
+  }
+};
+
+export const removeLikedSongAction = (song) => async (dispatch, getState) => {
+  const { userId } = getState().user; // Assume userId is in the state
+  try {
+    await removeLikedSong(userId, song);
+    dispatch({ type: REMOVE_LIKED_SONG, payload: song });
+  } catch (error) {
+    console.error('Error removing song', error);
+  }
+};
 
 export default store;

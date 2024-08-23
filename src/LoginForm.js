@@ -1,40 +1,33 @@
-import { IconButton } from "@mui/material";
 import React, { useState } from "react";
 import axios from "axios";
 import './LoginForm.css';
 import { useDispatch } from 'react-redux';
 import { loginSuccess } from './store';
 
-const LoginForm = ({ onClose }) => {
+const LoginForm = ({ handleLogin, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
 
+ 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Reset error message
-
+  
     try {
-      console.log("before response");
-      const response = await axios.post('http://localhost:8001/login', {
-        email,
-        password,
-      });
-      console.log("after response", response);
-
-      // Assuming the server responds with user data on successful login
+      const response = await axios.post('http://localhost:8001/login', { email, password });
       if (response.status === 200) {
         const userData = response.data.user;
-        dispatch(loginSuccess(userData));
+        dispatch(loginSuccess(userData)); // Ensure dispatch is called with correct data
         onClose();
       } else {
         setError('Login failed. Please check your credentials and try again.');
       }
     } catch (error) {
       setError(`Error: ${error.response ? error.response.data.error : 'Server error'}`);
-      console.log(`Error: ${error.response ? error.response.data.error : 'Server error'}`);
     }
   };
 
@@ -61,9 +54,9 @@ const LoginForm = ({ onClose }) => {
             required
           />
         </div>
-        <IconButton className="submit-button" type="submit">
+        <button className="submit-button" type="submit">
           Login
-        </IconButton>
+        </button>
       </form>
     </div>
   );

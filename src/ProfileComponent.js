@@ -9,15 +9,16 @@ import SignupForm from "./SignupForm";
 import Box from "@mui/material/Box";
 import { Avatar } from '@mui/material';
 import { useDispatch } from "react-redux";
-import { logout } from "./store";
+import { logout, clearLikedSongs, loginSuccess, setSongs } from "./store";
 import { useTheme } from "./ThemeContext";
 import ThemeToggleButton from './ThemeToggleButton';
+import axios from "axios";
 
 
 
 Modal.setAppElement("#root"); // For accessibility, set the root element
 
-function ProfileComponent({ isVisible, onClose, user }) {
+function ProfileComponent({ isVisible, onClose,onLogout, user }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const dispatch = useDispatch();
@@ -28,6 +29,36 @@ function ProfileComponent({ isVisible, onClose, user }) {
     setModalIsOpen(true);
   };
   const closeModal = () => setModalIsOpen(false);
+
+  const handleLogout = async () => {
+    console.log("Before logout");
+    try {
+      await axios.post("http://localhost:8001/logout", {}, { withCredentials: true });
+      dispatch(logout());
+      dispatch(clearLikedSongs()); // Clear liked songs on logout
+      console.log("After logout");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const handleLogin = async (email, password) => {
+    console.log("Before login");
+    try {
+      const response = await axios.post("http://localhost:8001/login", { email, password });
+      if (response.status === 200) {
+        const userData = response.data.user;
+        dispatch(loginSuccess(userData));
+        const likedSongsResponse = await axios.get("http://localhost:8001/liked-songs", { withCredentials: true });
+        dispatch(setSongs({ likedSongs: likedSongsResponse.data }));
+        console.log("After login");
+      } else {
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
 
   return (
     <div className={`profile-overlay ${isVisible ? "profile-visible" : ""}`}>
@@ -48,7 +79,14 @@ function ProfileComponent({ isVisible, onClose, user }) {
                 <strong>Email:</strong> {user.email}
               </p>
             </Box>
-            <IconButton className="logout-button" onClick={() => dispatch(logout())}>Logout</IconButton>
+            <IconButton 
+            className="logout-button" 
+            onClick={handleLogout}>Logout
+
+            </IconButton>
+            
+            
+            
             <ThemeToggleButton />
           </div>
         ) : (
@@ -78,7 +116,8 @@ function ProfileComponent({ isVisible, onClose, user }) {
             X
           </IconButton>
           {isLogin ? (
-            <LoginForm onClose={closeModal} />
+            <LoginForm onClose={closeModal} handleLogin={handleLogin}   />
+            
           ) : (
             <SignupForm onClose={closeModal} />
           )}

@@ -8,7 +8,7 @@ import TabComponent from "./TabComponent";
 import ProfileComponent from "./ProfileComponent";
 import GenreSelector from "./GenreSelector";
 import { useSelector, useDispatch } from "react-redux";
-import { loginSuccess, fetchSongs, likeSong } from "./store";
+import { loginSuccess, fetchSongs, likeSong, setSongs } from "./store";
 
 function App() {
   const [showTab, setShowTab] = useState(false);
@@ -122,6 +122,10 @@ function App() {
       if (response.status === 200) {
         const userData = response.data.user;
         dispatch(loginSuccess(userData));
+  
+        // Fetch liked songs after login
+        const likedSongsResponse = await axios.get("http://localhost:8001/liked-songs", { withCredentials: true });
+        dispatch(setSongs({ likedSongs: likedSongsResponse.data }));
       } else {
         console.error("Login failed");
       }
@@ -129,6 +133,8 @@ function App() {
       console.error("Login failed:", error);
     }
   };
+  
+  
   const handleGenreSelect = (genre) => {
     setSelectedGenre(genre);
     console.log("Selected genre:", genre);
